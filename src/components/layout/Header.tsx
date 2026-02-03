@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { 
   AppBar, 
@@ -20,6 +19,8 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import BuildIcon from '@mui/icons-material/Build';
 import { APP_CONFIG, ROUTES } from '@/lib/constants';
 
 const navLinks = [
@@ -47,17 +48,10 @@ export const Header: React.FC = () => {
   };
 
   const drawer = (
-    <Box className="w-64 h-full bg-gradient-to-b from-green-800 to-green-900">
-      <div className="flex items-center justify-between p-4 border-b border-green-700">
+    <Box className="w-64 h-full bg-gradient-to-b from-gray-800 to-gray-900">
+      <div className="flex items-center justify-between p-4 border-b border-gray-700">
         <div className="flex items-center space-x-2">
-          <div className="relative w-8 h-8">
-            <Image
-              src="/logo192.png"
-              alt="Logo Ferretera Ecosa"
-              fill
-              className="object-contain"
-            />
-          </div>
+          <BuildIcon className="text-orange-500 text-3xl" />
           <Typography variant="h6" className="text-white font-bold">
             {APP_CONFIG.COMPANY_NAME}
           </Typography>
@@ -81,8 +75,8 @@ export const Header: React.FC = () => {
               <div className={`
                 w-full p-3 rounded-lg transition-all duration-300
                 ${isActiveRoute(link.href) 
-                  ? 'bg-white bg-opacity-20 text-white' 
-                  : 'text-green-100 hover:bg-white hover:bg-opacity-10 hover:text-white'
+                  ? 'bg-orange-500 text-white shadow-lg' 
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white'
                 }
               `}>
                 <ListItemText 
@@ -95,6 +89,26 @@ export const Header: React.FC = () => {
             </Link>
           </ListItem>
         ))}
+        
+        <ListItem className="px-2 mt-4">
+          <Link 
+            href={ROUTES.ADMIN_LOGIN} 
+            className="w-full"
+            onClick={handleDrawerToggle}
+          >
+            <div className="w-full p-3 rounded-lg transition-all duration-300 bg-yellow-600 hover:bg-yellow-500 text-white shadow-lg">
+              <div className="flex items-center justify-center space-x-2">
+                <AdminPanelSettingsIcon />
+                <ListItemText 
+                  primary="Admin"
+                  primaryTypographyProps={{ 
+                    className: 'font-bold'
+                  }}
+                />
+              </div>
+            </div>
+          </Link>
+        </ListItem>
       </List>
     </Box>
   );
@@ -103,24 +117,30 @@ export const Header: React.FC = () => {
     <>
       <AppBar 
         position="fixed" 
-        className="bg-gradient-to-r from-green-800 via-green-700 to-green-800 shadow-lg"
+        className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-2xl border-b-4 border-orange-500"
         sx={{ zIndex: theme.zIndex.drawer + 1 }}
       >
-        <Toolbar className="px-4 lg:px-8">
+        <Toolbar className="px-4 lg:px-8 min-h-[70px]">
           {/* Logo y título */}
-          <Link href={ROUTES.HOME} className="flex items-center space-x-3">
-            <div className="relative w-10 h-10">
-              <Image
-                src="/logo192.png"
-                alt="Logo Ferretera Ecosa"
-                fill
-                className="object-contain"
-                priority
-              />
+          <Link href={ROUTES.HOME} className="flex items-center space-x-3 hover:opacity-90 transition-opacity">
+            <BuildIcon className="text-orange-500 text-4xl" />
+            <div className="hidden sm:block">
+              <Typography 
+                variant="h5" 
+                className="text-white font-bold tracking-wide leading-tight"
+              >
+                {APP_CONFIG.COMPANY_NAME}
+              </Typography>
+              <Typography 
+                variant="caption" 
+                className="text-orange-400 font-medium"
+              >
+                Ferretería Industrial
+              </Typography>
             </div>
             <Typography 
-              variant="h5" 
-              className="text-white font-bold tracking-wide"
+              variant="h6" 
+              className="sm:hidden text-white font-bold"
             >
               {APP_CONFIG.COMPANY_NAME}
             </Typography>
@@ -131,22 +151,54 @@ export const Header: React.FC = () => {
 
           {/* Navegación desktop */}
           {!isMobile && (
-            <div className="flex space-x-2">
+            <div className="flex items-center space-x-2">
               {navLinks.map((link) => (
                 <Link key={link.href} href={link.href}>
                   <Button
-                    className={`
-                      px-4 py-2 rounded-lg transition-all duration-300 font-medium
-                      ${isActiveRoute(link.href)
-                        ? 'bg-white bg-opacity-20 text-white shadow-lg'
-                        : 'text-green-100 hover:bg-white hover:bg-opacity-10 hover:text-white'
-                      }
-                    `}
+                    sx={{
+                      px: 2,
+                      py: 1,
+                      borderRadius: 2,
+                      fontWeight: 600,
+                      textTransform: 'none',
+                      fontSize: '1rem',
+                      backgroundColor: isActiveRoute(link.href) ? '#f97316' : 'transparent',
+                      color: isActiveRoute(link.href) ? '#ffffff' : '#d1d5db',
+                      '&:hover': {
+                        backgroundColor: isActiveRoute(link.href) ? '#ea580c' : '#374151',
+                        color: '#ffffff',
+                      },
+                      boxShadow: isActiveRoute(link.href) ? '0 4px 6px -1px rgb(0 0 0 / 0.1)' : 'none',
+                      transform: isActiveRoute(link.href) ? 'scale(1.05)' : 'scale(1)',
+                    }}
                   >
                     {link.title}
                   </Button>
                 </Link>
               ))}
+              
+              <Link href={ROUTES.ADMIN_LOGIN}>
+                <Button
+                  startIcon={<AdminPanelSettingsIcon />}
+                  sx={{
+                    ml: 2,
+                    px: 2,
+                    py: 1,
+                    borderRadius: 2,
+                    fontWeight: 700,
+                    textTransform: 'none',
+                    fontSize: '1rem',
+                    backgroundColor: '#ca8a04',
+                    color: '#ffffff',
+                    '&:hover': {
+                      backgroundColor: '#a16207',
+                    },
+                    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+                  }}
+                >
+                  Admin
+                </Button>
+              </Link>
             </div>
           )}
 
@@ -157,9 +209,9 @@ export const Header: React.FC = () => {
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
-              className="text-white"
+              className="text-orange-500"
             >
-              <MenuIcon />
+              <MenuIcon className="text-3xl" />
             </IconButton>
           )}
         </Toolbar>

@@ -1,48 +1,32 @@
-import type { Metadata } from "next";
+'use client';
+
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers/Providers";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { usePathname } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Ferretera Ecosa - Productos de Calidad",
-  description: "Encuentra herramientas, materiales de construcción y productos de ferretería de la mejor calidad en Ferretera Ecosa.",
-  keywords: "ferretería, herramientas, construcción, materiales, Ecosa",
-  authors: [{ name: "Ferretera Ecosa" }],
-  manifest: "/manifest.json",
-  icons: {
-    icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/logo192.png", sizes: "192x192", type: "image/png" },
-      { url: "/logo512.png", sizes: "512x512", type: "image/png" }
-    ],
-    apple: [
-      { url: "/logo192.png", sizes: "192x192", type: "image/png" }
-    ]
-  },
-  openGraph: {
-    title: "Ferretera Ecosa - Productos de Calidad",
-    description: "Tu ferretería de confianza para herramientas y materiales de construcción.",
-    type: "website",
-    images: [
-      {
-        url: "/logo512.png",
-        width: 512,
-        height: 512,
-        alt: "Logo Ferretera Ecosa"
-      }
-    ]
-  },
-  twitter: {
-    card: "summary",
-    title: "Ferretera Ecosa - Productos de Calidad",
-    description: "Tu ferretería de confianza para herramientas y materiales de construcción.",
-    images: ["/logo512.png"]
+function LayoutContent({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const isAdminRoute = pathname?.startsWith('/admin');
+
+  if (isAdminRoute) {
+    return <>{children}</>;
   }
-};
+
+  return (
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+      <Header />
+      <main className="flex-1 pt-[70px]">
+        {children}
+      </main>
+      <Footer />
+    </div>
+  );
+}
 
 export default function RootLayout({
   children,
@@ -53,13 +37,7 @@ export default function RootLayout({
     <html lang="es">
       <body className={`${inter.className} antialiased`}>
         <Providers>
-          <div className="min-h-screen flex flex-col bg-gradient-to-br from-green-900 via-blue-900 to-green-800">
-            <Header />
-            <main className="flex-1 pt-20">
-              {children}
-            </main>
-            <Footer />
-          </div>
+          <LayoutContent>{children}</LayoutContent>
         </Providers>
       </body>
     </html>

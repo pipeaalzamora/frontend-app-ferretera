@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { 
   Container, 
   Typography, 
@@ -19,24 +18,19 @@ import {
 } from '@mui/icons-material';
 import { APP_CONFIG, ROUTES } from '@/lib/constants';
 
+import BuildIcon from '@mui/icons-material/Build';
+
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white mt-auto">
-      <Container maxWidth="lg" className="py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950 text-white mt-auto border-t-4 border-orange-500">
+      <Container maxWidth="lg" className="py-12 px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Información de la empresa */}
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="relative w-8 h-8">
-                <Image
-                  src="/logo192.png"
-                  alt="Logo Ferretera Ecosa"
-                  fill
-                  className="object-contain"
-                />
-              </div>
+              <BuildIcon className="text-orange-500 text-3xl" />
               <Typography variant="h5" className="font-bold">
                 {APP_CONFIG.COMPANY_NAME}
               </Typography>
@@ -69,7 +63,7 @@ export const Footer: React.FC = () => {
 
           {/* Enlaces rápidos */}
           <div>
-            <Typography variant="h6" className="font-semibold mb-4 text-green-400">
+            <Typography variant="h6" className="font-semibold mb-4 text-orange-400">
               Enlaces Rápidos
             </Typography>
             <ul className="space-y-2">
@@ -82,7 +76,7 @@ export const Footer: React.FC = () => {
                 <li key={link.href}>
                   <Link 
                     href={link.href}
-                    className="text-gray-300 hover:text-green-400 transition-colors duration-300"
+                    className="text-gray-300 hover:text-orange-400 transition-colors duration-300"
                   >
                     {link.title}
                   </Link>
@@ -93,7 +87,7 @@ export const Footer: React.FC = () => {
 
           {/* Servicios */}
           <div>
-            <Typography variant="h6" className="font-semibold mb-4 text-green-400">
+            <Typography variant="h6" className="font-semibold mb-4 text-orange-400">
               Nuestros Servicios
             </Typography>
             <ul className="space-y-2">
@@ -115,25 +109,25 @@ export const Footer: React.FC = () => {
 
           {/* Información de contacto */}
           <div>
-            <Typography variant="h6" className="font-semibold mb-4 text-green-400">
+            <Typography variant="h6" className="font-semibold mb-4 text-orange-400">
               Contáctanos
             </Typography>
             <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <LocationOn className="text-green-400 text-xl" />
+              <div className="flex items-start space-x-3">
+                <LocationOn className="text-orange-400 text-xl flex-shrink-0 mt-0.5" />
                 <Typography variant="body2" className="text-gray-300">
                   Av. Principal 123, Ciudad
                 </Typography>
               </div>
               <div className="flex items-center space-x-3">
-                <Phone className="text-green-400 text-xl" />
+                <Phone className="text-orange-400 text-xl flex-shrink-0" />
                 <Typography variant="body2" className="text-gray-300">
                   +1 234 567 8900
                 </Typography>
               </div>
-              <div className="flex items-center space-x-3">
-                <Email className="text-green-400 text-xl" />
-                <Typography variant="body2" className="text-gray-300">
+              <div className="flex items-start space-x-3">
+                <Email className="text-orange-400 text-xl flex-shrink-0 mt-0.5" />
+                <Typography variant="body2" className="text-gray-300 break-all">
                   info@ecosa.com
                 </Typography>
               </div>
@@ -144,12 +138,12 @@ export const Footer: React.FC = () => {
         <Divider className="my-8 bg-gray-700" />
 
         {/* Copyright */}
-        <div className="flex flex-col md:flex-row justify-between items-center">
+        <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left">
           <Typography variant="body2" className="text-gray-400">
             © {currentYear} {APP_CONFIG.COMPANY_NAME}. Todos los derechos reservados.
           </Typography>
           <Typography variant="body2" className="text-gray-400 mt-2 md:mt-0">
-            Versión {APP_CONFIG.VERSION} • Desarrollado con Next.js
+            Versión {APP_CONFIG.VERSION}
           </Typography>
         </div>
       </Container>

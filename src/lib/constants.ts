@@ -9,7 +9,12 @@ export const API_ENDPOINTS = {
   CATEGORIES: '/api/categories',
   CONTACT: '/api/contact',
   ADMIN_LOGIN: '/api/admin/login',
-  ADMIN_PRODUCTS: '/api/admin/products'
+  ADMIN_PRODUCTS: '/api/admin/products',
+  ADMIN_CATEGORIES: '/api/admin/categories',
+  ADMIN_CONTACTS: '/api/admin/contacts',
+  ADMIN_STATS: '/api/admin/stats',
+  ADMIN_UPLOAD_IMAGE: '/api/admin/upload/image',
+  ADMIN_UPLOAD_IMAGES: '/api/admin/upload/images',
 } as const;
 
 // Configuraciones generales
@@ -38,7 +43,12 @@ export const ROUTES = {
   HOME: '/',
   CATALOG: '/catalogo',
   ABOUT: '/nosotros',
-  CONTACT: '/contacto'
+  CONTACT: '/contacto',
+  ADMIN_LOGIN: '/admin/login',
+  ADMIN_DASHBOARD: '/admin/dashboard',
+  ADMIN_PRODUCTS: '/admin/products',
+  ADMIN_CATEGORIES: '/admin/categories',
+  ADMIN_CONTACTS: '/admin/contacts',
 } as const;
 
 export type RouteKey = keyof typeof ROUTES; 
